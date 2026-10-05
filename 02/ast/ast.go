@@ -1,5 +1,7 @@
 package ast
 
+import "interpreter-go/01/token"
+
 type Node interface {
 	TokenLiteral() string
 }
@@ -25,3 +27,20 @@ func (p *Program) TokenLiteral() string {
 		return ""
 	}
 }
+
+type LetStatement struct {
+	Token token.Token
+	Name  *Identifier
+	Value Expression
+}
+
+type Identifier struct {
+	Token token.Token
+	Value string
+}
+
+func (ls *LetStatement) StatementNode()       {}
+func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+
+func (i *Identifier) ExpressionNode()      {}
+func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
